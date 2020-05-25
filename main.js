@@ -71,7 +71,7 @@ class Snake {
   }
 
   draw(){
-
+    
     let size = this.parts.length
     for(let i=size-1;i>0;i--){
       let pos = (this.parts[i-1]).position
@@ -84,7 +84,6 @@ class Snake {
           x,y
       }
     }
-
     this.head.update(this.position)
 
     this.parts.map(part =>{
@@ -111,6 +110,11 @@ class Snake {
           if(this.blocked.x != -1)
             this.move = {y:0,x:-1}
           break;      
+        case ('+'):
+          this.grow()
+          this.grow()
+          this.grow()
+          break;   
       }
     }
   }
@@ -157,22 +161,24 @@ class Food {
     if(  distance < 25 ){
       this.redraw()
       this.snake.grow()
+      this.increaseScore(1)
     }
   }
 
   getRandomPos(){
+    let positionAlreadyFilled = false 
     let MaxPos = GameDivMaxHeight/snakeBodySizePX;
-    let randX = Math.floor(  Math.random()* MaxPos ) * snakeBodySizePX
-    let randY = Math.floor(  Math.random()* MaxPos ) * snakeBodySizePX
+    let randX;
+    let randY;
+    do {
+      randX = Math.floor(  Math.random()* MaxPos ) * snakeBodySizePX
+      randY = Math.floor(  Math.random()* MaxPos ) * snakeBodySizePX
 
-
-    this.snake.parts.map(({position} )=>{
-
-      if(position.x == randX && position.y == randY)
-        console.log('problem on random ! ',position)
+      positionAlreadyFilled = this.snake.parts.some(({position} )=>
+        (position.x == randX && position.y == randY) 
+      )
       
-
-    })
+    }while(positionAlreadyFilled)
     this.position = {x:randX,y:randY}
   }
 
@@ -190,6 +196,8 @@ function calcDistance(p1,p2){
   return distance;
 }
 
+
+
 class Game {
 
   constructor(){
@@ -198,12 +206,22 @@ class Game {
       {btnText:"High Scores",className:"high-scores",btnAction:(ev)=>{ console.log('high scores') } }
     ]
     this.initMainMenu()
+    
+  }
+  setScore(val){
+    this.score = val
+    if(this.scoreDom){
+      this.scoreDom.innerText = val
+    }
+  }
+  increaseScore(inc){
+    this.setScore(this.score + inc)
   }
 
   initMainMenu(){
     this.stopLoop();
     GamePlace.innerHTML = ""
-    this.setGameStateBar()
+    //this.setGameStateBar()
     if(!this.menu){
       let menu = document.createElement("div")
       menu.classList.add('main-menu')
@@ -223,10 +241,25 @@ class Game {
 
   
   initNewGame(){
+    GamePlace.innerHTML = ""
     this.setGameStateBar() ;
-
+    this.setScore(0)
     this.snake = new Snake(0,0)
     this.food = new Food(this.snake);
+    this.food.increaseScore = (inc) => this.increaseScore(inc)
+    requestAnimationFrame(
+      this.update.bind(this)
+    )
+  }
+
+  restartGame(){
+    this.stopLoop();
+    GamePlace.innerHTML = ""
+    this.setGameStateBar() ;
+    this.setScore(0)
+    this.snake = new Snake(0,0)
+    this.food = new Food(this.snake);
+    this.food.increaseScore = (inc) => this.increaseScore(inc)
     requestAnimationFrame(
       this.update.bind(this)
     )
@@ -235,8 +268,8 @@ class Game {
   setGameStateBar(){
 
     if(!this.gameStates){
-      let buttons = [ {btntext:"R",class:"restart",btnAction:()=>{console.log("tested   R")}},
-                      {btntext:"X",class:"leave",btnAction:()=>{console.log("tested X")}}
+      let buttons = [ {btntext:"R",class:"restart",btnAction:()=>{this.restartGame()}},
+                      {btntext:"X",class:"leave",btnAction:()=>{this.initMainMenu()}}
                     ]
 
       let gameSt = document.createElement("div")
@@ -260,19 +293,24 @@ class Game {
       this.gameStates = gameSt;
     }
     GamePlace.append(this.gameStates);
+    this.scoreDom = document.getElementById("score")
   }
 
   update(){
     console.log('Updateing')
     this.snake.update()
     this.food.update()
+    clearTimeout(this.timout)
     this.timout = setTimeout(()=>{
       requestAnimationFrame(
         this.update.bind(this)
       )
     },1000/FramesPerSecond)
-  }
   
+  
+  }
+
+
   stopLoop(){
     clearTimeout(this.timout)
   }
@@ -281,17 +319,3 @@ class Game {
 
 let game = new Game()
 
-/* 
-`
-      <div class="game-stats">
-        <div class="part">
-          <div class="score">score : <span id="score">0</span></div>
-        </div>
-        <div class="part">
-          <div class="restart btn">R</div>
-          <div class="leave btn" onclick="console.log("test")" >X</div>
-        </div>
-      </div>
-    `
-
-    */

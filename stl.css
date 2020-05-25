@@ -58,8 +58,8 @@ body {
   box-sizing: border-box;
   display: inline-block;
   z-index: 6;
-  top: -25px;
-  left: -25px;
+  top: -205px;
+  left: -205px;
 }
 
 .food{
