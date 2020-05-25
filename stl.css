@@ -61,7 +61,10 @@ body {
   top: -205px;
   left: -205px;
 }
-
+.snake.dead .part{
+  border-radius: 25px;
+  background: #eb7b7b;
+}
 .food{
   position: absolute;
   height: 25px;
@@ -106,3 +109,4 @@ body {
 .main-menu .btn:hover {
   background: #7e7d7d ;
 }
+

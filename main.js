@@ -37,7 +37,7 @@ class Snake {
 
     this.parts = [ this.head ]
 
-    this.snake= document.createElement('div')
+    this.snake = document.createElement('div')
     this.snake.classList.add('snake')
 
     this.parts.map( ({dom}) => {
@@ -47,6 +47,13 @@ class Snake {
     GamePlace.append(this.snake)
 
     this.input()
+    let options = {
+      root: this.head.dom,
+      rootMargin: '0px',
+      threshold: 1.0
+    }
+
+
 
   }
 
@@ -70,9 +77,17 @@ class Snake {
         y = y - my *(500)
       }
     }
-
+    this.dieOnIntersection()
     this.position = {x,y}
 
+  }
+
+  dieOnIntersection(callback){
+    for(let i = 1;i< this.parts.length;i++){
+      if( calcDistance( this.head.position , this.parts[i].position ) === 0 ){
+        callback()
+      }
+    }
   }
 
   draw(){
@@ -131,6 +146,7 @@ class Snake {
       y: y + snakeBodySizePX*this.move.y ,
     }
     let newPart = new SnakePart(pos)
+
     this.parts.push(newPart)
     this.snake.append(newPart.dom)
   }
@@ -208,10 +224,11 @@ class Game {
   constructor(){
     this.MenuButtons = [
       {btnText:"New Game",className:"new-game",btnAction:(ev)=>{ this.initNewGame()}},
-      {btnText:"High Scores",className:"high-scores",btnAction:(ev)=>{ console.log('high scores') } }
+      {btnText:"High Scores",className:"high-scores",btnAction:(ev)=>{ alert('high scores') } }
     ]
     this.initMainMenu()
     
+
   }
   setScore(val){
     this.score = val
@@ -302,19 +319,24 @@ class Game {
   }
 
   update(){
-    console.log('Updateing')
     this.snake.update()
     this.food.update()
     clearTimeout(this.timout)
+
     this.timout = setTimeout(()=>{
       requestAnimationFrame(
         this.update.bind(this)
       )
     },1000/FramesPerSecond)
-  
+
+    this.snake.dieOnIntersection(()=> this.endGame())
   
   }
 
+  endGame(){
+    this.stopLoop()
+    this.snake.snake.classList.add('dead')
+  }
 
   stopLoop(){
     clearTimeout(this.timout)
