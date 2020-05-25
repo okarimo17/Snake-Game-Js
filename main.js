@@ -1,7 +1,7 @@
 const GamePlace = document.getElementById('game')
 const padding = 0;
 const snakeBodySizePX = 25;
-const GameDivMaxHeight = 500 - snakeBodySizePX ;
+const GameDivMaxHeight = 500 - snakeBodySizePX;
 const GameDivMaxWidth  = 500 - snakeBodySizePX;
 const FramesPerSecond = 20;
 
@@ -62,8 +62,13 @@ class Snake {
     y += this.move.y * snakeBodySizePX;
 
 
-    if( x>GameDivMaxHeight || x<0  ||  y>GameDivMaxWidth || y < 0  ){
-      return;
+    if( x>GameDivMaxHeight || y>GameDivMaxWidth || x<0  ||  y < 0  ){
+      let {x:mx,y:my} = this.move
+      if(Math.abs(mx) == 1 ){
+        x = x - mx *(500)
+      }else if (Math.abs(my) == 1){
+        y = y - my *(500)
+      }
     }
 
     this.position = {x,y}
@@ -177,7 +182,7 @@ class Food {
       positionAlreadyFilled = this.snake.parts.some(({position} )=>
         (position.x == randX && position.y == randY) 
       )
-      
+
     }while(positionAlreadyFilled)
     this.position = {x:randX,y:randY}
   }
