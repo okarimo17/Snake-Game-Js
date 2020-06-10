@@ -3,6 +3,7 @@ Hello programmers , in this repositery , i've tried to rebuild the old snake gam
 
 ## Live Preview :
 You can try the game from here : [Play Now](https://oucifkarim01.github.io/Snake-Game-Js/)
+Default play buttons are : z for up , s for down , d for right , q for left
 
 ## Goal of this mini project :
 The goal isn't to make a playable game , I was just intend to recreate the algorithm of the game , so this game can be different than the original one.
