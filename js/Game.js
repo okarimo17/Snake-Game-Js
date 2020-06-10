@@ -10,7 +10,10 @@ export default class Game {
   constructor(){
     this.MenuButtons = [
       {btnText:"New Game",className:"new-game",btnAction:(ev)=>{ this.initNewGame()}},
-      {btnText:"High Scores",className:"high-scores",btnAction:(ev)=>{ alert(`High Score : ${window.localStorage.getItem('HighScore')}`) } }
+      {btnText:"High Scores",className:"high-scores",btnAction:(ev)=>{ 
+          let score = window.localStorage.getItem('HighScore') || 0
+          alert(`High Score : ${score} `) 
+        } }
     ]
     this.initMainMenu()
     
