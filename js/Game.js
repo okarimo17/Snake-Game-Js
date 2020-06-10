@@ -13,7 +13,10 @@ export default class Game {
       {btnText:"High Scores",className:"high-scores",btnAction:(ev)=>{ 
           let score = window.localStorage.getItem('HighScore') || 0
           alert(`High Score : ${score} `) 
-        } }
+        } },
+
+      {btnText:"Game Speed",className:"game-speed",btnAction:(ev)=>{ this.setGameSpeed()}},
+      
     ]
     this.initMainMenu()
     
@@ -136,6 +139,10 @@ export default class Game {
       window.localStorage.setItem('HighScore',this.score)
     }
 
+  }
+
+  setGameSpeed(){
+    
   }
 
   stopLoop(){

@@ -112,19 +112,19 @@ export default class Snake {
     document.onkeydown = ev=>{
       ev.preventDefault()
       switch (ev.key){
-        case (GameInputs.up):
+        case (GameInputs.up || "ArrowUp"):
           if(this.blocked.y != -1)
             this.move = {y:-1,x:0}
           break;
-        case (GameInputs.down):
+        case (GameInputs.down || "ArrowDown"):
           if(this.blocked.y != 1)
             this.move = {y:1,x:0}
           break;
-        case (GameInputs.right):
+        case (GameInputs.right || "ArrowRight"):
           if(this.blocked.x != 1)
             this.move = {y:0,x:1}
           break;
-        case (GameInputs.left):
+        case (GameInputs.left || "ArrowLeft"):
           if(this.blocked.x != -1)
             this.move = {y:0,x:-1}
           break;      
