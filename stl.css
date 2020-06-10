@@ -110,3 +110,7 @@ body {
   background: #7e7d7d ;
 }
 
+.game-stats .part  p {
+  margin: 0;
+  padding: 0;
+}
