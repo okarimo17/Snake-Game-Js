@@ -1,5 +1,5 @@
 import {GamePlace,snakeBodySizePX,GameDivMaxHeight,GameDivMaxWidth,calcDistance} from './Config.js'
-
+import GameInputs from './Input.js'
 
 
 
@@ -109,27 +109,26 @@ export default class Snake {
   }
 
   input(){
-    document.onkeypress = ev=>{
+    document.onkeydown = ev=>{
+      ev.preventDefault()
       switch (ev.key){
-        case ('z'):
+        case (GameInputs.up):
           if(this.blocked.y != -1)
             this.move = {y:-1,x:0}
           break;
-        case ('s'):
+        case (GameInputs.down):
           if(this.blocked.y != 1)
             this.move = {y:1,x:0}
           break;
-        case ('d'):
+        case (GameInputs.right):
           if(this.blocked.x != 1)
             this.move = {y:0,x:1}
           break;
-        case ('q'):
+        case (GameInputs.left):
           if(this.blocked.x != -1)
             this.move = {y:0,x:-1}
           break;      
-        case ('+'):
-          this.grow()
-          this.grow()
+        case (GameInputs.increaseSnake):
           this.grow()
           break;   
       }

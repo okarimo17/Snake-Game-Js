@@ -6,6 +6,7 @@ export const GameDivMaxWidth  = 500 - snakeBodySizePX;  //heigh of the game boar
 export const FramesPerSecond = 20;  // Increase The Value if you need the game to be faster
 
 
+
 export function calcDistance(p1,p2){
   
   let {x:x1,y:y1} = p1;
