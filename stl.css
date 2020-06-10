@@ -114,3 +114,26 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
+/*Speed Selecter*/
+.speed-selecter {
+  position: absolute;
+  background: #082f6ad6;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 100;
+  color: #fff;
+  font-size: 18px;
+  text-transform: capitalize;
+  display: none;
+}
+.speed-selecter.show{
+  display: flex;
+}

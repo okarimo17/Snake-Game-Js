@@ -1,4 +1,4 @@
-import {GamePlace,FramesPerSecond} from './Config.js'
+import {GamePlace,minFrames,maxFrames} from './Config.js'
 
 
 import Snake from './Snake.js'
@@ -6,7 +6,7 @@ import Food from './Food.js'
 
 
 export default class Game {
-
+  
   constructor(){
     this.MenuButtons = [
       {btnText:"New Game",className:"new-game",btnAction:(ev)=>{ this.initNewGame()}},
@@ -19,9 +19,15 @@ export default class Game {
       
     ]
     this.initMainMenu()
-    
+    this.setFrames()
 
   }
+  setFrames(){
+    const SpeedPercentage = window.localStorage.getItem('GameSpeed')/100 || 0.5
+    this.FramesPerSecond = minFrames + ( SpeedPercentage * (maxFrames-minFrames) )
+    console.log(this.FramesPerSecond)
+  }
+
   setScore(val){
     this.score = val
     if(this.scoreDom){
@@ -122,7 +128,7 @@ export default class Game {
       requestAnimationFrame(
         this.update.bind(this)
       )
-    },1000/FramesPerSecond)
+    },1000/this.FramesPerSecond)
 
     this.snake.dieOnIntersection(()=> this.endGame())
   
@@ -142,7 +148,7 @@ export default class Game {
   }
 
   setGameSpeed(){
-    
+    document.querySelector('.speed-selecter').classList.add('show')
   }
 
   stopLoop(){

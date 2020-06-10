@@ -3,8 +3,15 @@ export const GamePlace = document.getElementById('game')
 export const snakeBodySizePX = 25; // High==Width of the Snake parts 
 export const GameDivMaxHeight = 500 - snakeBodySizePX;  //heigh of the game board it have to equal the width
 export const GameDivMaxWidth  = 500 - snakeBodySizePX;  //heigh of the game board it have to equal the width
-export const FramesPerSecond = 20;  // Increase The Value if you need the game to be faster
+// 10 <= val <= 25
+/*
+const SpeedPercentage = window.localStorage.getItem('GameSpeed')/100 || 0.5
+const Frames = 10 + ( SpeedPercentage * (25-10) );
+console.log(Frames)
+*/
 
+export const minFrames       = 10;
+export const maxFrames       = 30;
 
 
 export function calcDistance(p1,p2){

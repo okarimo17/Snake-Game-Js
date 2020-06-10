@@ -1,4 +1,10 @@
 import Game from './Game.js'
+import SpeedInit from './Speed.js'
 
-let game = new Game()
+
+const game = new Game()
+
+
+SpeedInit(game)
+
 
