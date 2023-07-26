@@ -2,7 +2,7 @@
 Hello programmers , in this repositery , i've tried to rebuild the old snake game using html css js , without using canvas api.
 
 ## Live Preview :
-You can try the game from here : [Play Now](https://oucifkarim01.github.io/Snake-Game-Js/)
+You can try the game from here : [Play Now](https://okarimo17.github.io/Snake-Game-Js/)
 Default play buttons are : z for up , s for down , d for right , q for left
 
 ## Goal of this mini project :
